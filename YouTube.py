@@ -1,14 +1,26 @@
 # This is the first file for creating a youtube downloader using pytube2
-# Maison Kasprick - 10/11/2024
+# Maison Kasprick - 10/12/2024
 # Version 1.0
 
 # Imports
 from pytube.download_helper import download_video
-from pytube import YouTube
+from pytube import YouTube, Playlist
+from pytube.exceptions import VideoUnavailable, VideoPrivate
 
 
 # Tests link provided to see if it is a valid YouTube link
 def link_validation(test_link: str) -> bool:
+    """This function is used to test a link provided that it is indeed a YouTube link.
+        The two starting formats for a valid YouTube link are "https://youtu.be/" and "https://www.youtube.com/"
+
+    Args:
+        test_link (str): Provided link
+
+    Returns:
+        bool: Returns True if the link provided is a valid YouTube link
+              Returns False if it is either a short or an expcetion occured
+    """
+    # Possible YouTube links
     comparative_video = 'https://youtu.be/'
     comparative_video_url = 'https://www.youtube.com/'
     comparative_short = 'https://www.youtube.com/shorts/'
@@ -16,6 +28,7 @@ def link_validation(test_link: str) -> bool:
     # Splits test link by '/'
     link_split = test_link.split('/')
 
+    # Attempts to prove the link is a valid YouTube link
     try:
         # Builds link back together to test if it is a normal YouTube video
         comparative_video_link = f'{link_split[0]}//{link_split[2]}/'
@@ -28,8 +41,17 @@ def link_validation(test_link: str) -> bool:
             print('Can not Download YouTube shorts')
             return False
         
+    # Informs the user of errors that occured with the link provided
+    except VideoPrivate:
+        print(f'"{test_link}" is a private video')
+        return False
+        
+    except VideoUnavailable:
+        print(f'"{test_link}" is not a avalible')
+        return False
+        
     except Exception:
-        print(f'"{test_link}" is not a YouTube link')
+        print(f'"{test_link}" is not a YouTube link or ran into an unexpected error')
         return False
 
 
@@ -62,10 +84,11 @@ def conversion_choice(user_choice: str, youtube_link: str) -> bool:
 
     print('Not a valid choice')
     return True
-        
-        
-# Gets YouTube link from user and converts to whatever the user wants
-def main() -> None:
+    
+    
+# This is what will run if this file is selected
+if __name__ == '__main__':
+    # Gets YouTube link from user and converts to whatever the user wants
     print('Note - if you are wanting to download a playlist you will need to copy the search bar url')
     link = input('Paste YouTube link: ')
 
@@ -89,8 +112,3 @@ def main() -> None:
     
     if link_validation(link):
         print('This is a valid YouTube link')
-    
-    
-# This is what will run if this file is selected
-if __name__ == '__main__':
-    main()
