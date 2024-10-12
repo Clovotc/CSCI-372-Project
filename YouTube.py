@@ -55,33 +55,44 @@ def link_validation(test_link: str) -> bool:
         return False
 
 
-def download(youtube_link: str) -> None:
+# Downloads YouTube video
+def single_video_download(youtube_link: str) -> None:
     try:
         download_video(youtube_link)
         
     except Exception:
         print(Exception)
         
+    
+# Downloads YouTube playlist 
+def playlist_download(youtube_link: str) -> None:
+    ...
+        
         
 # Converts YouTube video to what the user wants
 def conversion_choice(user_choice: str, youtube_link: str) -> bool:
+    """This function is mainly used in execution of this file by itself.
+        The two current choices are 1 for playlist and 2 for a single video
+
+    Args:
+        user_choice (str): A numeric string between 1 and 2
+        youtube_link (str): Provided link
+
+    Returns:
+        bool: Returns True if user did not enter a valid choice option
+              Returns False if user did enter a valid choice and executes the corrisponding function
+    """
+    # Check if user selected to download a playlist
     if user_choice == '1':
-    #     download_playlist(youtube_link)
+        playlist_download(youtube_link)
         return False
     
+    # Check if user selected to download a single video
     if user_choice == '2':
-    #     download_mp4(youtube_link)
-        return False
-    
-    if user_choice == '3':
-    #     download_mp3(youtube_link)
-        return False
-    
-    if user_choice == '4':
-    #     download_mp4(youtube_link)
-    #     download_mp3(youtube_link)
+        single_video_download(youtube_link)
         return False
 
+    # User did not select a either a playlist or a single video option
     print('Not a valid choice')
     return True
     
@@ -92,23 +103,21 @@ if __name__ == '__main__':
     print('Note - if you are wanting to download a playlist you will need to copy the search bar url')
     link = input('Paste YouTube link: ')
 
-    # continue_loop = True
+    # Starts a while loop until user enters correct inputs
+    continue_loop = True
 
-    # while continue_loop:
-    #     conversion = input('What would you like to do with the link? \n'
-    #                        'If it is a Playlist press 1 \n'
-    #                        'Download video as MP4 press 2 \n'
-    #                        'Download video as MP3 press 3 \n'
-    #                        'Download video as Both press 4 \n'
-    #                        'To Quit press Q \n'
-    #                        'Choice: ')
+    while continue_loop:
+        conversion = input('What would you like to do with the link? \n'
+                           'For a playlist enter 1 \n'
+                           'For a single video enter 2 \n'
+                           'To Quit enter Q \n'
+                           'Choice: ')
 
-    #     if conversion in ['q','Q']:
-    #         continue_loop = False
-    #         print('Quiting Program')
+        # Exits the while loop
+        if conversion in ['q','Q']:
+            continue_loop = False
+            print('Quiting Program')
             
-    #     else:
-    #         continue_loop = conversion_choice(conversion, link)
-    
-    if link_validation(link):
-        print('This is a valid YouTube link')
+        # Executes the users choice which will set the new boolean for the while loop
+        else:
+            continue_loop = conversion_choice(conversion, link)
