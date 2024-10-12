@@ -43,22 +43,22 @@ def download(youtube_link: str) -> None:
         
 # Converts YouTube video to what the user wants
 def conversion_choice(user_choice: str, youtube_link: str) -> bool:
-    # if user_choice == '1':
+    if user_choice == '1':
     #     download_playlist(youtube_link)
-    #     return False
+        return False
     
-    # if user_choice == '2':
+    if user_choice == '2':
     #     download_mp4(youtube_link)
-    #     return False
+        return False
     
-    # if user_choice == '3':
+    if user_choice == '3':
     #     download_mp3(youtube_link)
-    #     return False
+        return False
     
-    # if user_choice == '4':
+    if user_choice == '4':
     #     download_mp4(youtube_link)
     #     download_mp3(youtube_link)
-    #     return False
+        return False
 
     print('Not a valid choice')
     return True
