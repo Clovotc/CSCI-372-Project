@@ -1,6 +1,6 @@
 # This is the combined code of both GUI and YouTUbe files
 # Maison Kasprick - 11/4/2024
-# Version 1.0
+# Version 1.0.1
 
 # Imports
 import tkinter
@@ -37,7 +37,7 @@ def link_validation(test_link: str) -> bool:
         return True
     
     # If the provided link 
-    print(f'"{test_link}" is not a valid YouTube link')
+    valid_label.configure(f'"{test_link}" is not a valid YouTube link')
     return False
 
 
@@ -49,30 +49,29 @@ def download_mp3() -> None:
     
     # Test to see if YouTube link provided is valid
     if link_validation(youtube_link) is False:
-        print('Unsuccessful MP3 Download Attempt, Try again.')
+        finish_label.configure('Unsuccessful MP3 Download Attempt, Try again.')
+        return
     
     # Attempts to download YouTube video if valid
     try:
         download_options = {
             # # # Save location and file name
             # # 'save_location': location + '/%(title)s.%(exts)s', 
-            # # Post-process to convert to MP3
-            # 'postprocessors': [{ 
-            #     'key': 'FFmpegExtractAudio',
-            #     'preferredcodec': 'mp3',
-            #     # '0' means best quality, auto-determined by source
-            #     'preferredquality': '0',
-            # }],
+            # Post-process to convert to MP3
+            'postprocessors': [{ 
+                'key': 'FFmpegExtractAudio',
+                'preferredcodec': 'mp3',
+                # '0' means best quality, auto-determined by source
+                'preferredquality': '0',
+            }],
         }
         # Iterates through the playlist or just downloads the one video
         with YoutubeDL(download_options) as youtube_download:
             youtube_download.download([youtube_link])
-            print('Successfully Downloaded MP3 File')
-            
-        # Refresh finish_label variable
-        finish_label.configure(text = '')
-        # If video is downloaded
-        finish_label.configure(text = 'Download Successful')
+            # Refresh finish_label variable
+            finish_label.configure(text = '')
+            # Inform the user that the download was successful
+            finish_label.configure(text = 'Successfully Downloaded MP3 File')
         
     # Informs the user that an error has occured when downloading
     except Exception:
@@ -87,7 +86,7 @@ def download_mp4() -> None:
     
     # Test to see if YouTube link provided is valid
     if link_validation(youtube_link) is False:
-        print('Unsuccessful MP4 Download Attempt, Try again.')
+        valid_label.configure('Unsuccessful MP4 Download Attempt, Try again.')
         return
     
     # Attempts to download YouTube video if valid
@@ -95,68 +94,67 @@ def download_mp4() -> None:
         download_options = {
             # # # Save location and file name
             # # 'save_location': location + '/%(title)s.%(exts)s', 
-            # # Post-process to convert to MP4
-            # 'postprocessors': [{  
-            #     'key': 'FFmpegExtractAudio',
-            #     'preferredcodec': 'mp4',  
-            #     # '0' means best quality, auto-determined by source
-            #     'preferredquality': '0',
-            # }],
+            # Post-process to convert to MP4
+            'postprocessors': [{  
+                'key': 'FFmpegExtractAudio',
+                'preferredcodec': 'mp4',  
+                # '0' means best quality, auto-determined by source
+                'preferredquality': '0',
+            }],
         }
         # Iterates through the playlist or just downloads the one video
         with YoutubeDL(download_options) as youtube_download:
             youtube_download.download([youtube_link])
-            print('Successfully Downloaded MP4 File')
-            
-        # Refresh finish_label variable
-        finish_label.configure(text = '')
-        # If video is downloaded
-        finish_label.configure(text = 'Download Successful')
+            # Refresh finish_label variable
+            finish_label.configure(text = '')
+            # Inform the user that the download was successful
+            finish_label.configure(text = 'Successfully Downloaded MP4 File')
         
     # Informs the user that an error has occured when downloading
     except Exception:
         finish_label.configure(text = f'"{youtube_link}" YouTube video does not exist or was not able to be downloaded')
 
-        
-def on_progress():
-    ...
 
+if __name__ == '__main__':
+    # System Settings
+    customtkinter.set_appearance_mode('system')
+    customtkinter.set_default_color_theme('dark-blue')
 
-# System Settings
-customtkinter.set_appearance_mode('system')
-customtkinter.set_default_color_theme('dark-blue')
+    # GUI frame
+    app = customtkinter.CTk()
+    app.geometry('720x480')
+    app.title('YouTube Downloader')
 
-# GUI frame
-app = customtkinter.CTk()
-app.geometry('720x480')
-app.title('YouTube Downloader')
+    # UI Elements
+    title = customtkinter.CTkLabel(app, text = 'Insert a YouTube link')
+    title.pack(padx = 10, pady = 10)
 
-# UI Elements
-title = customtkinter.CTkLabel(app, text = 'Insert a YouTube link')
-title.pack(padx = 10, pady = 10)
+    # Link input
+    input_link = tkinter.StringVar()
+    link = customtkinter.CTkEntry(app, width = 350, height = 40, textvariable = input_link)
+    link.pack()
 
-# Link input
-input_link = tkinter.StringVar()
-link = customtkinter.CTkEntry(app, width = 350, height = 40, textvariable = input_link)
-link.pack()
+    # Finished Downloading
+    finish_label = customtkinter.CTkLabel(app, text = '')
+    finish_label.pack()
+    
+    # Not valid link
+    valid_label = customtkinter.CTkLabel(app, text = '')
+    valid_label.pack()
 
-# Finished Downloading
-finish_label = customtkinter.CTkLabel(app, text = '')
-finish_label.pack()
+    # # Progress percentage
+    # pPercentage = customtkinter.CTkLabel(app, text = '0%')
+    # pPercentage.pack()
 
-# # Progress percentage
-# pPercentage = customtkinter.CTkLabel(app, text = '0%')
-# pPercentage.pack()
+    # progressBar = customtkinter.CTkProgressBar(app, width = 400)
+    # progressBar.set(0)
+    # progressBar.pack(padx = 10, pady =10)
 
-# progressBar = customtkinter.CTkProgressBar(app, width = 400)
-# progressBar.set(0)
-# progressBar.pack(padx = 10, pady =10)
+    # Download buttons
+    button_mp3 = customtkinter.CTkButton(app, text = 'Download MP3', command = download_mp3)
+    button_mp3.pack(padx = 10, pady = 10)
+    button_mp4 = customtkinter.CTkButton(app, text = 'Download MP4', command = download_mp4)
+    button_mp4.pack(padx = 10, pady = 10)
 
-# Download buttons
-button_mp3 = customtkinter.CTkButton(app, text = 'Download MP3', command = download_mp3)
-button_mp3.pack(padx = 10, pady = 10)
-button_mp4 = customtkinter.CTkButton(app, text = 'Download MP4', command = download_mp4)
-button_mp4.pack(padx = 10, pady = 10)
-
-# Run GUI
-app.mainloop()
+    # Run GUI
+    app.mainloop()
