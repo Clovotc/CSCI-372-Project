@@ -1,5 +1,5 @@
 # This is the first file for creating a youtube downloader using yt_dlp
-# Maison Kasprick - 10/15/2024
+# Maison Kasprick - 11/4/2024
 # Version 1.0.2
 
 # Imports
