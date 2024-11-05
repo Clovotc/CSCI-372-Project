@@ -1,6 +1,6 @@
 # This is the first file for creating a youtube downloader using yt_dlp
-# Maison Kasprick - 11/4/2024
-# Version 1.0.2
+# Maison Kasprick - 11/5/2024
+# Version 1.0.3
 
 # Imports
 from yt_dlp import YoutubeDL
@@ -33,23 +33,24 @@ def link_validation(test_link: str) -> bool:
     if comparative_video == comparative_video_link or comparative_video_url == comparative_video_link:
         return True
     
-    # If the provided link 
-    print(f'"{test_link}" is not a valid YouTube link')
+    # If the provided link is not valid
     return False
 
 
 # Downloads YouTube video
-def download_mp3(youtube_link: str, location: str = None) -> None:
-    """This is the funcito to download your video or playlist as all mp3 files
+def download_mp3(youtube_link: str, location: str = None) -> str:
+    """This is the function to download your video or playlist as all mp3 files
 
     Args:
         youtube_link (str): Provided YouTube link
         location (str, optional): Downloads videos to this location. Defaults to None.
+
+    Returns:
+        str: Returns the string of either a successful download or unsuccessful download 
     """
-    
     # Test to see if YouTube link provided is valid
     if link_validation(youtube_link) is False:
-        print('Unsuccessful MP3 Download Attempt, Try again.')
+        return(f'"{youtube_link}" is not a valid YouTube link')
     
     # Attempts to download YouTube video if valid
     try:
@@ -67,26 +68,27 @@ def download_mp3(youtube_link: str, location: str = None) -> None:
         # Iterates through the playlist or just downloads the one video
         with YoutubeDL(download_options) as youtube_download:
             youtube_download.download([youtube_link])
-            print('Successfully Downloaded MP3 File')
+            return('Successfully Downloaded MP3 File')
         
     # Informs the user that an error has occured when downloading
     except Exception:
-        print(f'"{youtube_link}" YouTube video does not exist or was not able to be downloaded')
+        return(f'"{youtube_link}" YouTube video does not exist or was not able to be downloaded')
         
         
 # Downloads YouTube video
-def download_mp4(youtube_link: str, location: str = None) -> None:
-    """This is the funcito to download your video or playlist as all mp4 files
-
+def download_mp4(youtube_link: str, location: str = None) -> str:
+    """This is the function to download your video or playlist as all mp4 files
+    
     Args:
         youtube_link (str): Provided YouTube link
         location (str, optional): Downloads videos to this location. Defaults to None.
+
+    Returns:
+        str: Returns the string of either a successful download or unsuccessful download 
     """
-    
     # Test to see if YouTube link provided is valid
     if link_validation(youtube_link) is False:
-        print('Unsuccessful MP4 Download Attempt, Try again.')
-        return
+        return(f'"{youtube_link}" is not a valid YouTube link')
     
     # Attempts to download YouTube video if valid
     try:
@@ -104,11 +106,11 @@ def download_mp4(youtube_link: str, location: str = None) -> None:
         # Iterates through the playlist or just downloads the one video
         with YoutubeDL(download_options) as youtube_download:
             youtube_download.download([youtube_link])
-            print('Successfully Downloaded MP4 File')
+            return('Successfully Downloaded MP4 File')
         
     # Informs the user that an error has occured when downloading
     except Exception:
-        print(f'"{youtube_link}" YouTube video does not exist or was not able to be downloaded')
+        return(f'"{youtube_link}" YouTube video does not exist or was not able to be downloaded')
         
         
 # Converts YouTube video to what the user wants
@@ -127,12 +129,12 @@ def conversion_choice(user_choice: str, youtube_link: str, location: str = None)
     
     # Check if user selected to download mp3
     if user_choice == '1':
-        download_mp3(youtube_link, location)
+        print(download_mp3(youtube_link, location))
         return False
     
     # Check if user selected to download mp4
     if user_choice == '2':
-        download_mp4(youtube_link, location)
+        print(download_mp4(youtube_link, location))
         return False
 
     # User did not select a either a playlist or a single video option
