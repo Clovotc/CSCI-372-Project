@@ -25,7 +25,7 @@ def valid_youtube_2() -> bool:
     
 def valid_youtube_3() -> bool:
     bad_link = 'https://yout.be/'
-    if YouTube.link_validation(bad_link):
+    if YouTube.link_validation(bad_link) is False:
         return True
     
     return False
@@ -45,26 +45,27 @@ def mp3_youtube_2() -> bool:
     bad_video = 'https://yo.be/mCSv5PL53x4'
     result = YouTube.download_mp3(bad_video)
     
-    if result == f'"{bad_video}" is not a valid YouTube link':
+    if result == '"https://yo.be/mCSv5PL53x4" is not a valid YouTube link':
         return True
     
     return False
     
-    
+# Returns False which should not happen 
 def mp3_youtube_3() -> bool:
     error_video = 'https://www.youtube.com/watch?v=enYdAxVcNZA&list=WL'
     result = YouTube.download_mp3(error_video)
-    
-    if result == f'"{error_video}" YouTube video does not exist or was not able to be downloaded':
+    print(result)
+    if result == '"https://www.youtube.com/watch?v=enYdAxVcNZA&list=WL" YouTube video does not exist or was not able to be downloaded':
         return True
     
     return False
     
-    
+
+# Returns False which should not happen  
 def mp4_youtube_1() -> bool:
     good_video = 'https://youtu.be/enYdAxVcNZA'
-    result = YouTube.download_mp3(good_video)
-    
+    result = YouTube.download_mp4(good_video)
+    print(result)
     if result == 'Successfully Downloaded MP4 File':
         return True
     
@@ -73,9 +74,9 @@ def mp4_youtube_1() -> bool:
     
 def mp4_youtube_2() -> bool:
     bad_video = 'https://yo.be/enYdAxVcNZA'
-    result = YouTube.download_mp3(bad_video)
+    result = YouTube.download_mp4(bad_video)
     
-    if result == f'"{bad_video}" is not a valid YouTube link':
+    if result == '"https://yo.be/enYdAxVcNZA" is not a valid YouTube link':
         return True
     
     return False
@@ -83,9 +84,9 @@ def mp4_youtube_2() -> bool:
 
 def mp4_youtube_3() -> bool:
     error_video = 'https://www.youtube.com/watch?v=enYdAxVcNZA&list=WL'
-    result = YouTube.download_mp3(error_video)
+    result = YouTube.download_mp4(error_video)
     
-    if result == f'"{error_video}" YouTube video does not exist or was not able to be downloaded':
+    if result == '"https://www.youtube.com/watch?v=enYdAxVcNZA&list=WL" YouTube video does not exist or was not able to be downloaded':
         return True
     
     return False

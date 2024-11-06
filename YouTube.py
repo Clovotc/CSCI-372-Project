@@ -38,12 +38,11 @@ def link_validation(test_link: str) -> bool:
 
 
 # Downloads YouTube video
-def download_mp3(youtube_link: str, location: str = None) -> str:
+def download_mp3(youtube_link: str) -> str:
     """This is the function to download your video or playlist as all mp3 files
 
     Args:
         youtube_link (str): Provided YouTube link
-        location (str, optional): Downloads videos to this location. Defaults to None.
 
     Returns:
         str: Returns the string of either a successful download or unsuccessful download 
@@ -55,8 +54,6 @@ def download_mp3(youtube_link: str, location: str = None) -> str:
     # Attempts to download YouTube video if valid
     try:
         download_options = {
-            # # Save location and file name
-            # 'save_location': location + '/%(title)s.%(exts)s', 
             # Post-process to convert to MP3
             'postprocessors': [{ 
                 'key': 'FFmpegExtractAudio',
@@ -76,12 +73,11 @@ def download_mp3(youtube_link: str, location: str = None) -> str:
         
         
 # Downloads YouTube video
-def download_mp4(youtube_link: str, location: str = None) -> str:
+def download_mp4(youtube_link: str) -> str:
     """This is the function to download your video or playlist as all mp4 files
     
     Args:
         youtube_link (str): Provided YouTube link
-        location (str, optional): Downloads videos to this location. Defaults to None.
 
     Returns:
         str: Returns the string of either a successful download or unsuccessful download 
@@ -93,15 +89,10 @@ def download_mp4(youtube_link: str, location: str = None) -> str:
     # Attempts to download YouTube video if valid
     try:
         download_options = {
-            # # Save location and file name
-            # 'save_location': location + '/%(title)s.%(exts)s', 
-            # Post-process to convert to MP4
-            'postprocessors': [{  
-                'key': 'FFmpegExtractAudio',
-                'preferredcodec': 'mp4',  
-                # '0' means best quality, auto-determined by source
-                'preferredquality': '0',
-            }],
+            # # Post-process to convert to best format
+            # 'postprocessors': [{  
+            #     'key': 'FFmpegVideoConvertor',
+            # }],
         }
         # Iterates through the playlist or just downloads the one video
         with YoutubeDL(download_options) as youtube_download:
@@ -114,7 +105,7 @@ def download_mp4(youtube_link: str, location: str = None) -> str:
         
         
 # Converts YouTube video to what the user wants
-def conversion_choice(user_choice: str, youtube_link: str, location: str = None) -> bool:
+def conversion_choice(user_choice: str, youtube_link: str) -> bool:
     """This function is mainly used in execution of this file by itself.
         The two current choices are 1 for mp3 and 2 for mp4
 
@@ -129,12 +120,12 @@ def conversion_choice(user_choice: str, youtube_link: str, location: str = None)
     
     # Check if user selected to download mp3
     if user_choice == '1':
-        print(download_mp3(youtube_link, location))
+        print(download_mp3(youtube_link))
         return False
     
     # Check if user selected to download mp4
     if user_choice == '2':
-        print(download_mp4(youtube_link, location))
+        print(download_mp4(youtube_link))
         return False
 
     # User did not select a either a playlist or a single video option
