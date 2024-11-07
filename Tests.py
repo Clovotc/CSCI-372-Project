@@ -1,6 +1,6 @@
 # These tests on the files of the project
-# Maison Kasprick - 11/5/2024
-# Version 1.0.1
+# Maison Kasprick - 11/6/2024
+# Version 1.0.2
 
 # Imports
 import YouTube

@@ -1,16 +1,18 @@
 # This is the combined code of both GUI and YouTUbe files
-# Maison Kasprick - 11/5/2024
-# Version 1.0.2
+# Maison Kasprick - 11/6/2024
+# Version 1.0.3
 
 # Imports
 import tkinter
 import customtkinter
 import YouTube
 from yt_dlp import DownloadError
+from requests import HTTPError
 
 
 # Downloads YouTube video
 def mp3() -> None:
+    """This is the function used in the mp3 button call"""
     # Get link from label box
     youtube_link = link.get()
     
@@ -23,7 +25,10 @@ def mp3() -> None:
         finish_label.configure(text = '')
         finish_label.configure(text = return_str)
         
-    # Informs the user that an error has occured when downloading
+    # Informs the user of any errors has occured when downloading
+    except HTTPError:
+        finish_label.configure(text = return_str)
+        
     except DownloadError:
         finish_label.configure(text = return_str)
     
@@ -33,6 +38,7 @@ def mp3() -> None:
         
 # Downloads YouTube video
 def mp4() -> None:
+    """This is the function used in the mp4 button call"""
     # Get link from label box
     youtube_link = link.get()
     
@@ -45,12 +51,26 @@ def mp4() -> None:
         finish_label.configure(text = '')
         finish_label.configure(text = return_str)
         
-    # Informs the user that an error has occured when downloading
+    # Informs the user of any errors has occured when downloading
+    except HTTPError:
+        finish_label.configure(text = return_str)
+        
     except DownloadError:
         finish_label.configure(text = return_str)
     
     except Exception:
         finish_label.configure(text = return_str)
+
+
+# Clears text from GUI
+def clear() -> None:
+    """Clears all display text in the gui"""
+    # Creats empty string and replaces the input string
+    empty_link = tkinter.StringVar()
+    link.configure(textvariable = empty_link)
+    
+    # Clears label text for user
+    finish_label.configure(text = '')
 
 
 # GUI creation code
@@ -77,19 +97,15 @@ if __name__ == '__main__':
     finish_label = customtkinter.CTkLabel(app, text = '')
     finish_label.pack()
 
-    # # Progress percentage
-    # pPercentage = customtkinter.CTkLabel(app, text = '0%')
-    # pPercentage.pack()
-
-    # progressBar = customtkinter.CTkProgressBar(app, width = 400)
-    # progressBar.set(0)
-    # progressBar.pack(padx = 10, pady =10)
-
     # Download buttons
     button_mp3 = customtkinter.CTkButton(app, text = 'Download MP3', command = mp3)
     button_mp3.pack(padx = 10, pady = 10)
     button_mp4 = customtkinter.CTkButton(app, text = 'Download MP4', command = mp4)
     button_mp4.pack(padx = 10, pady = 10)
+    
+    # Clear button
+    button_clear = customtkinter.CTkButton(app, text = 'Clear', command = clear)
+    button_clear.pack(padx = 10, pady = 10)
 
     # Run GUI
     app.mainloop()

@@ -1,6 +1,6 @@
 # This is the first file for creating a youtube downloader using yt_dlp
-# Maison Kasprick - 11/5/2024
-# Version 1.0.3
+# Maison Kasprick - 11/6/2024
+# Version 1.0.4
 
 # Imports
 from requests import HTTPError
@@ -56,6 +56,7 @@ def download_mp3(youtube_link: str) -> str:
     
     # Attempts to download YouTube video if valid
     try:
+        # Settings for the download
         download_options = {
             # Post-process to convert to MP3
             'postprocessors': [{ 
@@ -69,9 +70,10 @@ def download_mp3(youtube_link: str) -> str:
         with YoutubeDL(download_options) as youtube_download:
             youtube_download.download([youtube_link])
         
+        # After running through all the downloads 
         return('Successfully Downloaded MP3 File')
         
-    # Informs the user that an error has occured when downloading
+    # Informs the user of any errors has occured when downloading
     except HTTPError as he:
         if he.code == 404:
             return(f"Error downloading {youtube_link}: {str(he)}")
@@ -101,15 +103,17 @@ def download_mp4(youtube_link: str) -> str:
     
     # Attempts to download YouTube video if valid
     try:
+        # Settings for the download
         download_options = {}
         
         # Iterates through the playlist or just downloads the one video
         with YoutubeDL(download_options) as youtube_download:
             youtube_download.download([youtube_link])
             
+        # After running through all the downloads 
         return('Successfully Downloaded MP4 File')
         
-    # Informs the user that an error has occured when downloading
+    # Informs the user of any errors has occured when downloading
     except HTTPError as he:
         if he.code == 404:
             return(f"Error downloading {youtube_link}: {str(he)}")
