@@ -41,6 +41,9 @@ def link_validation(test_link: str) -> bool:
         return False
         
     # If there is an error when trying to split the link
+    except ValueError:
+        return False
+        
     except Exception:
         return False
 
@@ -81,15 +84,15 @@ def download_mp3(youtube_link: str) -> str:
     # Informs the user of any errors has occured when downloading
     except HTTPError as he:
         if he.code == 404:
-            return(f"Error downloading {youtube_link}: {str(he)}")
+            return(f'HTTP Error from {youtube_link}')
         
-        return(f'Unkown HTTP error {str(he)}')
+        return('Unkown HTTP error')
     
-    except DownloadError as de:
-        return(f"Error downloading {youtube_link}: {str(de)}")
+    except DownloadError:
+        return(f'Error downloading {youtube_link}')
     
-    except Exception as e:
-        return(f'Unkown error {str(e)}')
+    except Exception:
+        return('Unkown error')
         
         
 # Downloads YouTube video
@@ -121,15 +124,15 @@ def download_mp4(youtube_link: str) -> str:
     # Informs the user of any errors has occured when downloading
     except HTTPError as he:
         if he.code == 404:
-            return(f"Error downloading {youtube_link}: {str(he)}")
+            return(f'HTTP Error from {youtube_link}')
         
-        return(f'Unkown HTTP error {str(he)}')
+        return('Unkown HTTP error')
     
-    except DownloadError as de:
-        return(f"Error downloading {youtube_link}: {str(de)}")
+    except DownloadError:
+        return(f'Error downloading {youtube_link}')
     
-    except Exception as e:
-        return(f'Unkown error {str(e)}')
+    except Exception:
+        return('Unkown error')
         
         
 # Converts YouTube video to what the user wants

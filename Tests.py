@@ -15,23 +15,17 @@ def valid_style1() -> bool:
               Returns False if the link is bad or an exception occured
     """
     good_link = 'https://youtu.be/'
-    
-    try:
-        result = YouTube.link_validation(good_link)
+
+    result = YouTube.link_validation(good_link)
         
-        # Link is good (What we want)
-        if result is True:
-            print(u'\u2713')
-            return True 
+    # Link is good (What we want)
+    if result is True:
+        print(u'\u2713')
+        return True 
     
-        # Link is bad (Not What we want)
-        print('X')
-        return False
-    
-    # Link caused an exception
-    except Exception:
-        print('X')
-        return False
+    # Link is bad (Not What we want)
+    print('X')
+    return False
     
     
 # Link_Validation Test 2
@@ -44,22 +38,16 @@ def valid_style2() -> bool:
     """
     good_link = 'https://www.youtube.com/'
     
-    try:
-        result = YouTube.link_validation(good_link)
+    result = YouTube.link_validation(good_link)
         
-        # Link is good (What we want)
-        if result is True:
-            print(u'\u2713')
-            return True
+    # Link is good (What we want)
+    if result is True:
+        print(u'\u2713')
+        return True
     
-        # Link is bad (Not what we want)
-        print('X')
-        return False
-    
-    # Link caused an exception
-    except Exception:
-        print('X')
-        return False
+    # Link is bad (Not what we want)
+    print('X')
+    return False
     
     
 # Link_Validation Test 3
@@ -72,22 +60,16 @@ def valid_bad() -> bool:
     """
     bad_link = 'https://yout.be/'
     
-    try:
-        result = YouTube.link_validation(bad_link)
+    result = YouTube.link_validation(bad_link)
         
-        # Link is bad (What we want)
-        if result is False:
-            print(u'\u2713')
-            return True
+    # Link is bad (What we want)
+    if result is False:
+        print(u'\u2713')
+        return True
         
-        # Link is good (Not what we want)
-        print('X')
-        return False
-    
-    # Link caused an exception
-    except Exception:
-        print('X')
-        return False
+    # Link is good (Not what we want)
+    print('X')
+    return False
 
 
 # Link_Validation Test 4
@@ -99,18 +81,17 @@ def valid_error() -> bool:
               Returns False if the link is good
     """
     error_link = 'https:youtu.be'
-    
-    try:
-        YouTube.link_validation(error_link)
+
+    result = YouTube.link_validation(error_link)
         
-        # If no exception occured (Not what we want)
-        print('X')
-        return False
-    
-    # If you exceptions occur (What we want)
-    except Exception:
+    # If there is a successful exception error trigger
+    if result is False:
         print(u'\u2713')
         return True
+        
+    # If no error occured (Not what we want)
+    print('X')
+    return False
     
     
 # Download_MP3 test 1
@@ -121,24 +102,18 @@ def mp3_good() -> bool:
         bool: Returns True if it was successfully downloaded
               Returns False if it was not downloaded or an exception occured
     """
-    good_video = 'https://youtu.be/mCSv5PL53x4'
+    good_video = 'https://youtu.be/enYdAxVcNZA'
     
-    try:
-        result = YouTube.download_mp3(good_video)
+    result = YouTube.download_mp3(good_video)
         
-        # Link was downloaded (What we want)
-        if result == 'Successfully Downloaded MP3 File':
-            print(u'\u2713')
-            return True
+    # Link was downloaded (What we want)
+    if result == 'Successfully Downloaded MP3 File':
+        print(u'\u2713')
+        return True
         
-        # Link was bad and not downloaded (Not what we want)
-        print('X')
-        return False
-    
-    # Download caused an exception
-    except Exception:
-        print('X')
-        return False
+    # Link was bad and not downloaded (Not what we want)
+    print('X')
+    return False
     
     
 # Download_MP3 test 2
@@ -151,22 +126,16 @@ def mp3_bad() -> bool:
     """
     bad_video = 'https://yo.be/mCSv5PL53x4'
     
-    try:
-        result = YouTube.download_mp3(bad_video)
+    result = YouTube.download_mp3(bad_video)
         
-        # Link is bad and wasn't downloaded (What we want)
-        if result == '"https://yo.be/mCSv5PL53x4" is not a valid YouTube link':
-            print(u'\u2713')
-            return True
+    # Link is bad and wasn't downloaded (What we want)
+    if result == '"https://yo.be/mCSv5PL53x4" is not a valid YouTube link':
+        print(u'\u2713')
+        return True
         
-        # Link was good and was downloaded (Not what we want)
-        print('X')
-        return False
-    
-    # Download caused an exception
-    except Exception:
-        print('X')
-        return False
+    # Link was good and was downloaded (Not what we want)
+    print('X')
+    return False
     
  
 # Download_MP3 test 3
@@ -177,19 +146,18 @@ def mp3_error() -> bool:
         bool: Returns True if error was successfully caught
               Returns False if youtube link was downloaded or a bad link
     """
-    error_video = 'https://www.youtube.com/'
+    error_video = 'https://www.youtube.com/rgaerdgr'
 
-    try:
-        YouTube.download_mp3(error_video)
-    
-        # Link was a valid link and caused no exception (Not what we want)
-        print('X')
-        return False
-    
-    # Download caused an exception (What we want)
-    except Exception:
+    result = YouTube.download_mp3(error_video)
+
+    # If there is a successful error trigger (What we want)
+    if result == f'HTTP Error from {error_video}' or result == 'Unkown HTTP error' or result == f'Error downloading {error_video}' or result == 'Unkown error':
         print(u'\u2713')
         return True
+        
+    # Link was a valid link and caused no exception (Not what we want)
+    print('X')
+    return False
     
 
 # Download_MP4 test 1
@@ -202,22 +170,16 @@ def mp4_good() -> bool:
     """
     good_video = 'https://youtu.be/enYdAxVcNZA'
     
-    try:
-        result = YouTube.download_mp4(good_video)
+    result = YouTube.download_mp4(good_video)
         
-        # Link was downloaded (What we want)
-        if result == 'Successfully Downloaded MP4 File':
-            print(u'\u2713')
-            return True
+    # Link was downloaded (What we want)
+    if result == 'Successfully Downloaded MP4 File':
+        print(u'\u2713')
+        return True
     
-        # Link was bad and not downloaded (Not What we want)
-        print('X')
-        return False
-    
-    # Download caused an exception
-    except Exception:
-        print('X')
-        return False
+    # Link was bad and not downloaded (Not What we want)
+    print('X')
+    return False
     
    
 # Download_MP4 test 2 
@@ -230,22 +192,16 @@ def mp4_bad() -> bool:
     """
     bad_video = 'https://yo.be/enYdAxVcNZA'
     
-    try:
-        result = YouTube.download_mp4(bad_video)
+    result = YouTube.download_mp4(bad_video)
         
-        # Link is bad and was not downloaded (What we want)
-        if result == '"https://yo.be/enYdAxVcNZA" is not a valid YouTube link':
-            print(u'\u2713')
-            return True
+    # Link is bad and was not downloaded (What we want)
+    if result == '"https://yo.be/enYdAxVcNZA" is not a valid YouTube link':
+        print(u'\u2713')
+        return True
     
-        # Link was good and was downloaded (Not what we want)
-        print('X')
-        return False
-    
-    # Download caused an exception
-    except Exception:
-        print('X')
-        return False
+    # Link was good and was downloaded (Not what we want)
+    print('X')
+    return False
 
 
 # Download_MP4 test 3
@@ -256,19 +212,18 @@ def mp4_error() -> bool:
         bool: Returns True if error was successfully caught
               Returns False if youtube link was downloaded or a bad link
     """
-    error_video = 'https://www.youtube.com/'
+    error_video = 'https://www.youtube.com/ragargarth'
     
-    try:
-        YouTube.download_mp4(error_video)
-
-        # Link was a valid link and was downloaded (Not what we want)
-        print('X')
-        return False
-    
-    # Download caused an exception (What we want)
-    except Exception:
+    result = YouTube.download_mp4(error_video)
+        
+    # If there is a successful error trigger (What we want)
+    if result == f'HTTP Error from {error_video}' or result == 'Unkown HTTP error' or result == f'Error downloading {error_video}' or result == 'Unkown error':
         print(u'\u2713')
         return True
+            
+    # Link was a valid link and caused no exception (Not what we want)
+    print('X')
+    return False
     
 
 # Runs all test functions
@@ -277,6 +232,7 @@ if __name__ == '__main__':
     print('Style 1 youtube link: ' + str(valid_style1()))
     print('Style 2 youtube link: ' + str(valid_style2()))
     print('Bad youtube link: ' + str(valid_bad()))
+    print('Error youtube link: ' + str(valid_error()))
     print('MP3 good youtube video: ' + str(mp3_good()))
     print('MP3 bad youtube video: ' + str(mp3_bad()))
     print('MP3 error youtube video: ' + str(mp3_error()))
