@@ -3,6 +3,7 @@
 # Version 1.0.3
 
 # Imports
+from requests import HTTPError
 from yt_dlp import YoutubeDL
 from yt_dlp.utils import DownloadError
 
@@ -71,6 +72,12 @@ def download_mp3(youtube_link: str) -> str:
         return('Successfully Downloaded MP3 File')
         
     # Informs the user that an error has occured when downloading
+    except HTTPError as he:
+        if he.code == 404:
+            return(f"Error downloading {youtube_link}: {str(he)}")
+        
+        return(f'Unkown HTTP error {str(he)}')
+    
     except DownloadError as de:
         return(f"Error downloading {youtube_link}: {str(de)}")
     
@@ -103,6 +110,12 @@ def download_mp4(youtube_link: str) -> str:
         return('Successfully Downloaded MP4 File')
         
     # Informs the user that an error has occured when downloading
+    except HTTPError as he:
+        if he.code == 404:
+            return(f"Error downloading {youtube_link}: {str(he)}")
+        
+        return(f'Unkown HTTP error {str(he)}')
+    
     except DownloadError as de:
         return(f"Error downloading {youtube_link}: {str(de)}")
     

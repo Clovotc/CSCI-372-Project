@@ -77,7 +77,7 @@ def mp3_bad() -> bool:
     
  
 def mp3_error() -> bool:
-    error_video = 'https://www.youtube.com/watch?v=enYdAxVcNZA&list=WL'
+    error_video = 'https://www.youtube.com/'
 
     try:
         YouTube.download_mp3(error_video)
@@ -127,7 +127,7 @@ def mp4_bad() -> bool:
 
 
 def mp4_error() -> bool:
-    error_video = 'https://www.youtube.com/watch?v=enYdAxVcNZA&list=WL'
+    error_video = 'https://www.youtube.com/'
     
     try:
         YouTube.download_mp4(error_video)
