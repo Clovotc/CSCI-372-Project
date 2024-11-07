@@ -6,10 +6,11 @@
 import tkinter
 import customtkinter
 import YouTube
+from yt_dlp import DownloadError
 
 
 # Downloads YouTube video
-def mp3():
+def mp3() -> None:
     # Get link from label box
     youtube_link = link.get()
     
@@ -23,6 +24,9 @@ def mp3():
         finish_label.configure(text = return_str)
         
     # Informs the user that an error has occured when downloading
+    except DownloadError:
+        finish_label.configure(text = return_str)
+    
     except Exception:
         finish_label.configure(text = return_str)
         
@@ -42,10 +46,14 @@ def mp4() -> None:
         finish_label.configure(text = return_str)
         
     # Informs the user that an error has occured when downloading
+    except DownloadError:
+        finish_label.configure(text = return_str)
+    
     except Exception:
         finish_label.configure(text = return_str)
 
 
+# GUI creation code
 if __name__ == '__main__':
     # System Settings
     customtkinter.set_appearance_mode('system')

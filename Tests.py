@@ -7,99 +7,147 @@ import YouTube
 
 
 # YouTube functions tests
-def valid_youtube_1() -> bool:
+def valid_style1() -> bool:
     good_link = 'https://youtu.be/'
-    if YouTube.link_validation(good_link):
-        return True
     
+    if YouTube.link_validation(good_link):
+        print(u'\u2713')
+        return True 
+    
+    print('X')
     return False
     
     
-def valid_youtube_2() -> bool:
+def valid_style2() -> bool:
     good_link = 'https://www.youtube.com/'
+    
     if YouTube.link_validation(good_link):
+        print(u'\u2713')
         return True
     
+    print('X')
     return False
     
     
-def valid_youtube_3() -> bool:
+def valid_bad() -> bool:
     bad_link = 'https://yout.be/'
+    
     if YouTube.link_validation(bad_link) is False:
+        print(u'\u2713')
         return True
     
+    print('X')
     return False
     
     
-def mp3_youtube_1() -> bool:
+def mp3_good() -> bool:
     good_video = 'https://youtu.be/mCSv5PL53x4'
-    result = YouTube.download_mp3(good_video)
     
-    if result == 'Successfully Downloaded MP3 File':
-        return True
+    try:
+        result = YouTube.download_mp3(good_video)
+        
+        if result == 'Successfully Downloaded MP3 File':
+            print(u'\u2713')
+            return True
+        
+        print('X')
+        return False
     
-    return False
+    except:
+        print('X')
+        return False
     
     
-def mp3_youtube_2() -> bool:
+def mp3_bad() -> bool:
     bad_video = 'https://yo.be/mCSv5PL53x4'
-    result = YouTube.download_mp3(bad_video)
     
-    if result == '"https://yo.be/mCSv5PL53x4" is not a valid YouTube link':
-        return True
+    try:
+        result = YouTube.download_mp3(bad_video)
+        
+        if result == '"https://yo.be/mCSv5PL53x4" is not a valid YouTube link':
+            print(u'\u2713')
+            return True
+        
+        print('X')
+        return False
     
-    return False
+    except:
+        print('X')
+        return False
     
-# Returns False which should not happen 
-def mp3_youtube_3() -> bool:
+ 
+def mp3_error() -> bool:
     error_video = 'https://www.youtube.com/watch?v=enYdAxVcNZA&list=WL'
-    result = YouTube.download_mp3(error_video)
-    print(result)
-    if result == '"https://www.youtube.com/watch?v=enYdAxVcNZA&list=WL" YouTube video does not exist or was not able to be downloaded':
-        return True
+
+    try:
+        YouTube.download_mp3(error_video)
     
-    return False
+        print('X')
+        return False
+    
+    except:
+        print(u'\u2713')
+        return True
     
 
-# Returns False which should not happen  
-def mp4_youtube_1() -> bool:
+def mp4_good() -> bool:
     good_video = 'https://youtu.be/enYdAxVcNZA'
-    result = YouTube.download_mp4(good_video)
-    print(result)
-    if result == 'Successfully Downloaded MP4 File':
-        return True
     
-    return False
+    try:
+        result = YouTube.download_mp4(good_video)
+        
+        if result == 'Successfully Downloaded MP4 File':
+            print(u'\u2713')
+            return True
+    
+        print('X')
+        return False
+    
+    except:
+        print('X')
+        return False
     
     
-def mp4_youtube_2() -> bool:
+def mp4_bad() -> bool:
     bad_video = 'https://yo.be/enYdAxVcNZA'
-    result = YouTube.download_mp4(bad_video)
     
-    if result == '"https://yo.be/enYdAxVcNZA" is not a valid YouTube link':
-        return True
+    try:
+        result = YouTube.download_mp4(bad_video)
+        
+        if result == '"https://yo.be/enYdAxVcNZA" is not a valid YouTube link':
+            print(u'\u2713')
+            return True
     
-    return False
+        print('X')
+        return False
+    
+    except:
+        print('X')
+        return False
 
 
-def mp4_youtube_3() -> bool:
+def mp4_error() -> bool:
     error_video = 'https://www.youtube.com/watch?v=enYdAxVcNZA&list=WL'
-    result = YouTube.download_mp4(error_video)
     
-    if result == '"https://www.youtube.com/watch?v=enYdAxVcNZA&list=WL" YouTube video does not exist or was not able to be downloaded':
+    try:
+        YouTube.download_mp4(error_video)
+
+        print('X')
+        return False
+    
+    except:
+        print(u'\u2713')
         return True
-    
-    return False
     
 
 if __name__ == '__main__':
     print('All tests should return true')
-    print('Style 1 youtube link: ' + str(valid_youtube_1()))
-    print('Style 2 youtube link: ' + str(valid_youtube_2()))
-    print('Bad youtube link: ' + str(valid_youtube_3()))
-    print('MP3 good youtube video: ' + str(mp3_youtube_1()))
-    print('MP3 bad youtube video: ' + str(mp3_youtube_2()))
-    print('MP3 error youtube video: ' + str(mp3_youtube_3()))
-    print('MP4 good youtube video: ' + str(mp4_youtube_1()))
-    print('MP4 bad youtube video: ' + str(mp4_youtube_2()))
-    print('MP4 error youtube video: ' + str(mp4_youtube_3()))
+    print('Style 1 youtube link: ' + str(valid_style1()))
+    print('Style 2 youtube link: ' + str(valid_style2()))
+    print('Bad youtube link: ' + str(valid_bad()))
+    print('MP3 good youtube video: ' + str(mp3_good()))
+    print('MP3 bad youtube video: ' + str(mp3_bad()))
+    print('MP3 error youtube video: ' + str(mp3_error()))
+    print('MP4 good youtube video: ' + str(mp4_good()))
+    print('MP4 bad youtube video: ' + str(mp4_bad()))
+    print('MP4 error youtube video: ' + str(mp4_error()))

@@ -4,6 +4,8 @@
 
 # Imports
 from yt_dlp import YoutubeDL
+from yt_dlp.utils import DownloadError
+
 
 # Tests link provided to see if it is a valid YouTube link
 def link_validation(test_link: str) -> bool:
@@ -65,11 +67,15 @@ def download_mp3(youtube_link: str) -> str:
         # Iterates through the playlist or just downloads the one video
         with YoutubeDL(download_options) as youtube_download:
             youtube_download.download([youtube_link])
-            return('Successfully Downloaded MP3 File')
+        
+        return('Successfully Downloaded MP3 File')
         
     # Informs the user that an error has occured when downloading
-    except Exception:
-        return(f'"{youtube_link}" YouTube video does not exist or was not able to be downloaded')
+    except DownloadError as de:
+        return(f"Error downloading {youtube_link}: {str(de)}")
+    
+    except Exception as e:
+        return(f'Unkown error {str(e)}')
         
         
 # Downloads YouTube video
@@ -88,20 +94,20 @@ def download_mp4(youtube_link: str) -> str:
     
     # Attempts to download YouTube video if valid
     try:
-        download_options = {
-            # # Post-process to convert to best format
-            # 'postprocessors': [{  
-            #     'key': 'FFmpegVideoConvertor',
-            # }],
-        }
+        download_options = {}
+        
         # Iterates through the playlist or just downloads the one video
         with YoutubeDL(download_options) as youtube_download:
             youtube_download.download([youtube_link])
-            return('Successfully Downloaded MP4 File')
+            
+        return('Successfully Downloaded MP4 File')
         
     # Informs the user that an error has occured when downloading
-    except Exception:
-        return(f'"{youtube_link}" YouTube video does not exist or was not able to be downloaded')
+    except DownloadError as de:
+        return(f"Error downloading {youtube_link}: {str(de)}")
+    
+    except Exception as e:
+        return(f'Unkown error {str(e)}')
         
         
 # Converts YouTube video to what the user wants
