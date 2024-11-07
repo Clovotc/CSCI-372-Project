@@ -1,9 +1,9 @@
 # This is the first file for creating a youtube downloader using yt_dlp
-# Maison Kasprick - 11/6/2024
-# Version 1.0.4
+# Maison Kasprick - 11/7/2024
+# Version 1.1
 
 # Imports
-from requests import HTTPError
+from urllib.error import HTTPError
 from yt_dlp import YoutubeDL
 from yt_dlp.utils import DownloadError
 
@@ -18,26 +18,31 @@ def link_validation(test_link: str) -> bool:
 
     Returns:
         bool: Returns True if the link provided is a valid YouTube link
-              Returns False if an expcetion occured
+              Returns False if the link is not a valid YouTube link or an expcetion occured when splitting the link
     """
     
     # Possible YouTube links
     comparative_video = 'https://youtu.be/'
     comparative_video_url = 'https://www.youtube.com/'
 
-    # First removes any spaces in the link then 
-    # Splits test link by '/'
-    link_split = test_link.split()
-    link_split = test_link.split('/')
-
-    # Attempts to prove the link is a valid YouTube link by
-    # Building the link back together to test if it is a normal YouTube video
-    comparative_video_link = f'{link_split[0]}//{link_split[2]}/'
-    if comparative_video == comparative_video_link or comparative_video_url == comparative_video_link:
-        return True
-    
-    # If the provided link is not valid
-    return False
+    try:
+        # First removes any spaces in the link then 
+        # Splits test link by '/'
+        link_split = test_link.split()
+        link_split = test_link.split('/')
+        
+        # Attempts to prove the link is a valid YouTube link by
+        # Building the link back together to test if it is a normal YouTube video
+        comparative_video_link = f'{link_split[0]}//{link_split[2]}/'
+        if comparative_video == comparative_video_link or comparative_video_url == comparative_video_link:
+            return True
+        
+        # If the provided link is not a valid youtube link
+        return False
+        
+    # If there is an error when trying to split the link
+    except Exception:
+        return False
 
 
 # Downloads YouTube video

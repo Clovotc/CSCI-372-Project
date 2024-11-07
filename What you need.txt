@@ -1,0 +1,9 @@
+Here is a list of what you will need for this project
+Without these packages the code will not properly run
+
+From pip:
+    yt_dlp
+    customtkinter
+
+External 
+    FFmpeg

@@ -1,6 +1,6 @@
 # This is the combined code of both GUI and YouTUbe files
-# Maison Kasprick - 11/6/2024
-# Version 1.0.3
+# Maison Kasprick - 11/7/2024
+# Version 1.1
 
 # Imports
 import tkinter
