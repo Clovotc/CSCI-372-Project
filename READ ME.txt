@@ -5,5 +5,10 @@ From pip:
     yt_dlp
     customtkinter
 
-External 
+External:
     FFmpeg
+
+
+How to run the code:
+To run the code, open the main.py file and run that. It will have a pop up window that will ask for you to input a YouTube link.
+Input your desired link, and select either mp3 or mp4 to download the link. 
