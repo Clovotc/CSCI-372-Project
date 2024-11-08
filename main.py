@@ -16,13 +16,18 @@ def mp3() -> None:
     # Get link from label box
     youtube_link = link.get()
     
-    # Informs the user that it is attempting the download of the link
-    finish_label.configure(text = 'Attempting to download link')
+    # Makes sure there is a link in the text box
+    if youtube_link == '':
+        return finish_label.configure(text = 'Please input a youtube link')
+    
+    # Clears the label for the user
+    finish_label.configure(text = '')
     
     # Runs the download_mp3 function from YouTube
     try:
+        # Informs the user that it is attempting the download of the link
+        finish_label.configure(text = 'Attempting to download link')
         return_str = YouTube.download_mp3(youtube_link)
-        finish_label.configure(text = '')
         finish_label.configure(text = return_str)
         
     # Informs the user of any errors has occured when downloading
@@ -42,13 +47,18 @@ def mp4() -> None:
     # Get link from label box
     youtube_link = link.get()
     
-    # Informs the user that it is attempting the download of the link
-    finish_label.configure(text = 'Attempting to download link')
+    # Makes sure there is a link in the text box
+    if youtube_link == '':
+        return finish_label.configure(text = 'Please input a youtube link')
+    
+    # Clears the label for the user
+    finish_label.configure(text = '')
     
     # Runs the download_mp3 function from YouTube
     try:
+        # Informs the user that it is attempting the download of the link
+        finish_label.configure(text = 'Attempting to download link')
         return_str = YouTube.download_mp4(youtube_link)
-        finish_label.configure(text = '')
         finish_label.configure(text = return_str)
         
     # Informs the user of any errors has occured when downloading

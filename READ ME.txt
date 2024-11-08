@@ -6,9 +6,8 @@ From pip:
     customtkinter
 
 External:
-    FFmpeg
-
+    FFmpeg - How to download 'https://youtu.be/JR36oH35Fgg'
 
 How to run the code:
 To run the code, open the main.py file and run that. It will have a pop up window that will ask for you to input a YouTube link.
-Input your desired link, and select either mp3 or mp4 to download the link. 
+Input your desired link, and select either mp3 or mp4 to download the link. If you want to clear everything press the clear button.

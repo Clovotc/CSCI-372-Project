@@ -20,7 +20,6 @@ def link_validation(test_link: str) -> bool:
         bool: Returns True if the link provided is a valid YouTube link
               Returns False if the link is not a valid YouTube link or an expcetion occured when splitting the link
     """
-    
     # Possible YouTube links
     comparative_video = 'https://youtu.be/'
     comparative_video_url = 'https://www.youtube.com/'
@@ -112,7 +111,10 @@ def download_mp4(youtube_link: str) -> str:
     # Attempts to download YouTube video if valid
     try:
         # Settings for the download
-        download_options = {}
+        download_options = {
+            # Try to download at 1080p quality otherwise download best quality
+            'format': 'bestvideo[height<=1080]+bestaudio/best[height<=1080]'
+        }
         
         # Iterates through the playlist or just downloads the one video
         with YoutubeDL(download_options) as youtube_download:
@@ -148,7 +150,6 @@ def conversion_choice(user_choice: str, youtube_link: str) -> bool:
         bool: Returns True if user did not enter a valid choice option
               Returns False if user did enter a valid choice and executes the corrisponding function
     """
-    
     # Check if user selected to download mp3
     if user_choice == '1':
         print(download_mp3(youtube_link))
