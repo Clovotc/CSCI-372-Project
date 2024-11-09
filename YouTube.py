@@ -1,6 +1,6 @@
 # This is the first file for creating a youtube downloader using yt_dlp
-# Maison Kasprick - 11/7/2024
-# Version 1.1
+# Maison Kasprick - 11/9/2024
+# Version 1.2
 
 # Imports
 from urllib.error import HTTPError
@@ -48,11 +48,12 @@ def link_validation(test_link: str) -> bool:
 
 
 # Downloads YouTube video
-def download_mp3(youtube_link: str) -> str:
+def download_mp3(youtube_link: str, location: str = None) -> str:
     """This is the function to download your video or playlist as all mp3 files
 
     Args:
         youtube_link (str): Provided YouTube link
+        location (str): Download path. Defaults to this folder
 
     Returns:
         str: Returns the string of either a successful download or unsuccessful download 
@@ -61,10 +62,19 @@ def download_mp3(youtube_link: str) -> str:
     if link_validation(youtube_link) is False:
         return(f'"{youtube_link}" is not a valid YouTube link')
     
+    # If nothing was inputted for location it will default to this folder
+    if location is None:
+        location = ''
+        
+    # Download path
+    download_path = location + '/%(title)s.%(ext)s'
+    
     # Attempts to download YouTube video if valid
     try:
         # Settings for the download
         download_options = {
+            # Download location blank is to this folder or custom folder
+            'outtmpl': download_path,
             # Post-process to convert to MP3
             'postprocessors': [{ 
                 'key': 'FFmpegExtractAudio',
@@ -95,11 +105,12 @@ def download_mp3(youtube_link: str) -> str:
         
         
 # Downloads YouTube video
-def download_mp4(youtube_link: str) -> str:
+def download_mp4(youtube_link: str, location: str = '') -> str:
     """This is the function to download your video or playlist as all mp4 files
     
     Args:
         youtube_link (str): Provided YouTube link
+        location (str): Download path. Defaults to this folder
 
     Returns:
         str: Returns the string of either a successful download or unsuccessful download 
@@ -108,10 +119,19 @@ def download_mp4(youtube_link: str) -> str:
     if link_validation(youtube_link) is False:
         return(f'"{youtube_link}" is not a valid YouTube link')
     
+    # If nothing was inputted for location it will default to this folder
+    if location is None:
+        location = ''
+        
+    # Download path
+    download_path = location + '/%(title)s.%(ext)s'
+    
     # Attempts to download YouTube video if valid
     try:
         # Settings for the download
         download_options = {
+            # Download location blank is to this folder or custom folder
+            'outtmpl': download_path,
             # Try to download at 1080p quality otherwise download best quality
             'format': 'bestvideo[height<=1080]+bestaudio/best[height<=1080]'
         }

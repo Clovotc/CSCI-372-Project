@@ -1,14 +1,40 @@
 # This is the combined code of both GUI and YouTUbe files
-# Maison Kasprick - 11/8/2024
-# Version 1.1
+# Maison Kasprick - 11/9/2024
+# Version 1.2
 
 # Imports
 import tkinter
+from tkinter.filedialog import askdirectory
 import customtkinter
 import YouTube
 from yt_dlp import YoutubeDL
 from yt_dlp import DownloadError
 from requests import HTTPError
+import os
+
+# Saved download location
+download_folder = ''
+
+
+# Get all files from folder
+def read_folder() -> None:
+    """This function is used to grab all files from selected folder"""  
+    # Grabs global download_folder variable
+    global download_folder
+    
+    # Checks download_folder for empty string
+    if download_folder == '':
+        return
+    
+    # Save string of all files in folder
+    all_files = ''
+    
+    # Reads all files from selected folder
+    for file in os.listdir(download_folder):
+        all_files += file + '\n'
+        
+    # Prints all files found in selected folder
+    files_label.configure(text = all_files)
 
 
 # Grab info of YouTube video
@@ -55,6 +81,10 @@ def mp3() -> None:
     # Get link from label box
     youtube_link = link.get()
     
+    # Get global download_folder
+    global download_folder
+    location = download_folder
+    
     # Makes sure there is a link in the text box
     if youtube_link == '':
         return finish_label.configure(text = 'Please input a youtube link')
@@ -67,11 +97,14 @@ def mp3() -> None:
     finish_label.configure(text = 'Attempting to download link')
         
     # Runs the download_mp3 function from YouTube
-    return_str = YouTube.download_mp3(youtube_link)
+    return_str = YouTube.download_mp3(youtube_link, location)
     finish_label.configure(text = return_str)
 
     # Gets information of video
     video_info(youtube_link)
+    
+    # Updates download folder display
+    read_folder()
     
         
 # Downloads YouTube video
@@ -79,6 +112,10 @@ def mp4() -> None:
     """This is the function used in the mp4 button call"""
     # Get link from label box
     youtube_link = link.get()
+    
+    # Get global download_folder
+    global download_folder
+    location = download_folder 
     
     # Makes sure there is a link in the text box
     if youtube_link == '':
@@ -92,11 +129,14 @@ def mp4() -> None:
     finish_label.configure(text = 'Attempting to download link')
     
     # Runs the download_mp4 function from YouTube
-    return_str = YouTube.download_mp4(youtube_link)
+    return_str = YouTube.download_mp4(youtube_link, location)
     finish_label.configure(text = return_str)
     
     # Gets information of video
     video_info(youtube_link)
+    
+    # Updates download folder display
+    read_folder()
 
 
 # Clears text from GUI
@@ -138,6 +178,20 @@ def read_me() -> None:
     read.mainloop()
 
 
+# Select download location
+def select_folder() -> None:
+    """Select folder function for the user to have a download location"""
+    # Gets the folder location from user and sets it to globabl variable
+    global download_folder 
+    download_folder = askdirectory(title = 'Select a folder to download to')
+
+    # Display to the user what download folder they have selected
+    location_label.configure(text = f'Downloads set to {download_folder}')
+    
+    # Gets all file names from selected folder
+    read_folder()
+
+
 # GUI creation code
 if __name__ == '__main__':
     # System Settings
@@ -146,39 +200,57 @@ if __name__ == '__main__':
 
     # GUI frame
     app = customtkinter.CTk()
-    app.geometry('500x400')
+    app.geometry('800x450')
     app.title('YouTube Downloader')
+    
+    # Frames
+    downloads = customtkinter.CTkFrame(app, width = 250, height = 200)
+    downloads.pack(padx = 10, pady =10, side = tkinter.RIGHT)
+    buttons = customtkinter.CTkFrame(app, width = 250, height = 200)
+    buttons.pack(padx =10, pady = 10, side = tkinter.LEFT)
 
     # UI Elements
-    title = customtkinter.CTkLabel(app, text = 'Insert a YouTube video link')
+    title = customtkinter.CTkLabel(buttons, text = 'Insert a YouTube video link')
     title.pack(padx = 10, pady = 10)
 
     # Link input
     input_link = tkinter.StringVar()
-    link = customtkinter.CTkEntry(app, width = 350, height = 40, textvariable = input_link)
-    link.pack()
+    link = customtkinter.CTkEntry(buttons, width = 350, height = 40, textvariable = input_link)
+    link.pack(padx = 10, pady = 10)
 
     # Finished Downloading
-    finish_label = customtkinter.CTkLabel(app, text = '')
+    finish_label = customtkinter.CTkLabel(buttons, text = '')
     finish_label.pack()
     
     # YouTube video downloaded
-    video_label = customtkinter.CTkLabel(app, text = '')
+    video_label = customtkinter.CTkLabel(buttons, text = '')
     video_label.pack()
 
     # Download buttons
-    button_mp3 = customtkinter.CTkButton(app, text = 'Download MP3', command = mp3)
+    button_mp3 = customtkinter.CTkButton(buttons, text = 'Download MP3', command = mp3)
     button_mp3.pack(padx = 10, pady = 10)
-    button_mp4 = customtkinter.CTkButton(app, text = 'Download MP4', command = mp4)
+    button_mp4 = customtkinter.CTkButton(buttons, text = 'Download MP4', command = mp4)
     button_mp4.pack(padx = 10, pady = 10)
     
     # Clear button
-    button_clear = customtkinter.CTkButton(app, text = 'Clear', command = clear)
+    button_clear = customtkinter.CTkButton(buttons, text = 'Clear', command = clear)
     button_clear.pack(padx = 10, pady = 10)
 
     # Help button
-    button_help = customtkinter.CTkButton(app, text = 'Help', command = read_me)
+    button_help = customtkinter.CTkButton(buttons, text = 'Help', command = read_me)
     button_help.pack(padx = 10, pady = 10)
+    
+    # Download Location
+    button_location = customtkinter.CTkButton(buttons, text = ' Set Download Location', command = select_folder)
+    button_location.pack(padx = 10, pady = 10)
+    
+    # Display location
+    location_label = customtkinter.CTkLabel(downloads, text = 'No download location selected')
+    location_label.pack(padx = 10, pady = 10)
+    
+    # Files in folder
+    files_label = customtkinter.CTkLabel(downloads, text = '', justify = tkinter.LEFT)
+    files_label.pack(padx = 10, pady = 10)
 
     # Run GUI
     app.mainloop()
