@@ -3,13 +3,13 @@
 # Version 1.2
 
 # Imports
-import tkinter
 from tkinter.filedialog import askdirectory
-import customtkinter
-import YouTube
 from yt_dlp import YoutubeDL
 from yt_dlp import DownloadError
 from requests import HTTPError
+import tkinter
+import customtkinter
+import YouTube
 import os
 
 # Saved download location
@@ -35,6 +35,20 @@ def read_folder() -> None:
         
     # Prints all files found in selected folder
     files_label.configure(text = all_files)
+
+
+# Select download location
+def select_folder() -> None:
+    """Select folder function for the user to have a download location"""
+    # Gets the folder location from user and sets it to globabl variable
+    global download_folder 
+    download_folder = askdirectory(title = 'Select a folder to download to')
+
+    # Display to the user what download folder they have selected
+    location_label.configure(text = f'Downloads set to {download_folder}')
+    
+    # Gets all file names from selected folder
+    read_folder()
 
 
 # Grab info of YouTube video
@@ -139,18 +153,6 @@ def mp4() -> None:
     read_folder()
 
 
-# Clears text from GUI
-def clear() -> None:
-    """Clears all display text in the gui"""
-    # Creats empty string and replaces the input string
-    empty_link = tkinter.StringVar()
-    link.configure(textvariable = empty_link)
-    
-    # Clears label text for user
-    finish_label.configure(text = '')
-    video_label.configure(text = '')
-
-
 # Creates a pop up window of READ ME file
 def read_me() -> None:
     """This function is used in the help button call"""
@@ -178,18 +180,28 @@ def read_me() -> None:
     read.mainloop()
 
 
-# Select download location
-def select_folder() -> None:
-    """Select folder function for the user to have a download location"""
-    # Gets the folder location from user and sets it to globabl variable
-    global download_folder 
-    download_folder = askdirectory(title = 'Select a folder to download to')
-
-    # Display to the user what download folder they have selected
-    location_label.configure(text = f'Downloads set to {download_folder}')
+# Clears text from GUI
+def clear() -> None:
+    """Clears all display text in the gui"""
+    # Creats empty string and replaces the input string
+    empty_link = tkinter.StringVar()
+    link.configure(textvariable = empty_link)
     
-    # Gets all file names from selected folder
-    read_folder()
+    # Clears label text for user
+    finish_label.configure(text = '')
+    video_label.configure(text = '')
+
+
+# Clears download location and path
+def clear_download() -> None:
+    """Clears the set download path, and all labels"""
+    # Gets global download location and clears location
+    global download_folder
+    download_folder = ''
+    
+    # Clear labels
+    location_label.configure(text = 'No download location selected')
+    files_label.configure(text = '')
 
 
 # GUI creation code
@@ -200,7 +212,7 @@ if __name__ == '__main__':
 
     # GUI frame
     app = customtkinter.CTk()
-    app.geometry('800x450')
+    app.geometry('800x500')
     app.title('YouTube Downloader')
     
     # Frames
@@ -233,7 +245,7 @@ if __name__ == '__main__':
     button_mp4.pack(padx = 10, pady = 10)
     
     # Clear button
-    button_clear = customtkinter.CTkButton(buttons, text = 'Clear', command = clear)
+    button_clear = customtkinter.CTkButton(buttons, text = 'Clear Download', command = clear)
     button_clear.pack(padx = 10, pady = 10)
 
     # Help button
@@ -241,8 +253,12 @@ if __name__ == '__main__':
     button_help.pack(padx = 10, pady = 10)
     
     # Download Location
-    button_location = customtkinter.CTkButton(buttons, text = ' Set Download Location', command = select_folder)
+    button_location = customtkinter.CTkButton(buttons, text = 'Set Download Location', command = select_folder)
     button_location.pack(padx = 10, pady = 10)
+    
+    # Clear download location
+    button_download_clear = customtkinter.CTkButton(buttons, text = 'Clear Set Location', command = clear_download)
+    button_download_clear.pack(padx = 10, pady = 10)
     
     # Display location
     location_label = customtkinter.CTkLabel(downloads, text = 'No download location selected')
