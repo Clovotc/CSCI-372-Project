@@ -111,6 +111,33 @@ def clear() -> None:
     video_label.configure(text = '')
 
 
+# Creates a pop up window of READ ME file
+def read_me() -> None:
+    """This function is used in the help button call"""
+    # System Settings
+    customtkinter.set_appearance_mode('system')
+    customtkinter.set_default_color_theme('dark-blue')
+    
+    # READ ME frame
+    read = customtkinter.CTk()
+    read.geometry('800x300')
+    read.title('HELP')
+    
+    # Open READ ME file
+    with open('READ ME.txt', 'r') as file:
+        read_me = file.readlines()
+    
+    # Converts the read_me list to a string
+    info = ' '.join(read_me)
+    
+    # Pastes READ ME files content into label
+    info_label = customtkinter.CTkLabel(read, width = 400, height = 400, text = info, justify = tkinter.LEFT)
+    info_label.pack(fill = tkinter.BOTH)
+    
+    # Run READ ME
+    read.mainloop()
+
+
 # GUI creation code
 if __name__ == '__main__':
     # System Settings
@@ -119,7 +146,7 @@ if __name__ == '__main__':
 
     # GUI frame
     app = customtkinter.CTk()
-    app.geometry('720x480')
+    app.geometry('500x400')
     app.title('YouTube Downloader')
 
     # UI Elements
@@ -148,6 +175,10 @@ if __name__ == '__main__':
     # Clear button
     button_clear = customtkinter.CTkButton(app, text = 'Clear', command = clear)
     button_clear.pack(padx = 10, pady = 10)
+
+    # Help button
+    button_help = customtkinter.CTkButton(app, text = 'Help', command = read_me)
+    button_help.pack(padx = 10, pady = 10)
 
     # Run GUI
     app.mainloop()
