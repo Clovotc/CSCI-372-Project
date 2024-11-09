@@ -105,7 +105,7 @@ def download_mp3(youtube_link: str, location: str = None) -> str:
         
         
 # Downloads YouTube video
-def download_mp4(youtube_link: str, location: str = '') -> str:
+def download_mp4(youtube_link: str, location: str = None) -> str:
     """This is the function to download your video or playlist as all mp4 files
     
     Args:

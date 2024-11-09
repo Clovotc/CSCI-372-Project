@@ -29,9 +29,17 @@ def read_folder() -> None:
     # Save string of all files in folder
     all_files = ''
     
+    # Count the number of files in the folder
+    count = 1
+    
     # Reads all files from selected folder
     for file in os.listdir(download_folder):
-        all_files += file + '\n'
+        # Splits title and type
+        title_file = file.split('.', 1)
+        # Grabs only title
+        all_files += f'{count}. {title_file[0]}\n'
+        # Increases the number of files count by 1
+        count += 1
         
     # Prints all files found in selected folder
     files_label.configure(text = all_files)
