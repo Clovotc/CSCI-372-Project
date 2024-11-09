@@ -1,5 +1,5 @@
 # This is the combined code of both GUI and YouTUbe files
-# Maison Kasprick - 11/7/2024
+# Maison Kasprick - 11/8/2024
 # Version 1.1
 
 # Imports
@@ -47,6 +47,7 @@ def video_info(youtube_link: str) -> None:
     
     except Exception:
         finish_label.configure(text = 'Unkown error')
+
 
 # Downloads YouTube video
 def mp3() -> None:
