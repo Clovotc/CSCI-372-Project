@@ -1,0 +1,6 @@
+In the test.py file, you will find all the tests to check on the funcationality of the YouTube functions.
+There are ten tests in the file. Four to test the link validation function. Three to test the download mp3 
+function. Three to test the download mp4 function. The link validation tests consist of the two types of 
+youtube link styles while the other two test a bad youtube link, and an error youtube link. The three tests 
+for both mp3 and mp4 download functions consist of a test for a good download, a bad download, and an error
+causing download. If the test file is ran it should print out ten check marks.
