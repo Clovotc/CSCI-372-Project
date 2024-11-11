@@ -20,6 +20,7 @@ def link_validation(test_link: str) -> bool:
         bool: Returns True if the link provided is a valid YouTube link
               Returns False if the link is not a valid YouTube link or an expcetion occured when splitting the link
     """
+    
     # Possible YouTube links
     comparative_video = 'https://youtu.be/'
     comparative_video_url = 'https://www.youtube.com/'
@@ -58,6 +59,7 @@ def download_mp3(youtube_link: str, location: str = None) -> str:
     Returns:
         str: Returns the string of either a successful download or unsuccessful download 
     """
+    
     # Test to see if YouTube link provided is valid
     if link_validation(youtube_link) is False:
         return(f'"{youtube_link}" is not a valid YouTube link')
@@ -115,6 +117,7 @@ def download_mp4(youtube_link: str, location: str = None) -> str:
     Returns:
         str: Returns the string of either a successful download or unsuccessful download 
     """
+    
     # Test to see if YouTube link provided is valid
     if link_validation(youtube_link) is False:
         return(f'"{youtube_link}" is not a valid YouTube link')
@@ -170,6 +173,7 @@ def conversion_choice(user_choice: str, youtube_link: str) -> bool:
         bool: Returns True if user did not enter a valid choice option
               Returns False if user did enter a valid choice and executes the corrisponding function
     """
+    
     # Check if user selected to download mp3
     if user_choice == '1':
         print(download_mp3(youtube_link))

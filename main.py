@@ -19,6 +19,7 @@ download_folder = ''
 # Get all files from folder
 def read_folder() -> None:
     """This function is used to grab all files from selected folder"""  
+    
     # Grabs global download_folder variable
     global download_folder
     
@@ -48,6 +49,7 @@ def read_folder() -> None:
 # Select download location
 def select_folder() -> None:
     """Select folder function for the user to have a download location"""
+    
     # Gets the folder location from user and sets it to globabl variable
     global download_folder 
     download_folder = askdirectory(title = 'Select a folder to download to')
@@ -66,6 +68,7 @@ def video_info(youtube_link: str) -> None:
     Args:
         youtube_link (str): Provided youtube link
     """
+    
     # Test to see if YouTube link provided is valid
     if YouTube.link_validation(youtube_link) is False:
         finish_label.configure(text = f'"{youtube_link}" is not a valid YouTube link')
@@ -100,6 +103,7 @@ def video_info(youtube_link: str) -> None:
 # Downloads YouTube video
 def mp3() -> None:
     """This is the function used in the mp3 button call"""
+    
     # Get link from label box
     youtube_link = link.get()
     
@@ -132,6 +136,7 @@ def mp3() -> None:
 # Downloads YouTube video
 def mp4() -> None:
     """This is the function used in the mp4 button call"""
+    
     # Get link from label box
     youtube_link = link.get()
     
@@ -164,6 +169,7 @@ def mp4() -> None:
 # Creates a pop up window of READ ME file
 def read_me() -> None:
     """This function is used in the help button call"""
+    
     # System Settings
     customtkinter.set_appearance_mode('system')
     customtkinter.set_default_color_theme('dark-blue')
@@ -191,6 +197,7 @@ def read_me() -> None:
 # Clears text from GUI
 def clear() -> None:
     """Clears all display text in the gui"""
+    
     # Creats empty string and replaces the input string
     empty_link = tkinter.StringVar()
     link.configure(textvariable = empty_link)
@@ -203,6 +210,7 @@ def clear() -> None:
 # Clears download location and path
 def clear_download() -> None:
     """Clears the set download path, and all labels"""
+    
     # Gets global download location and clears location
     global download_folder
     download_folder = ''
